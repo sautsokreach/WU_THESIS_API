@@ -35,11 +35,20 @@ const create = (req,res) => {
     // }else{
         
         const {
-            title,year,university,batch,semester,department,start_term,end_term,subject
+            title,year,university,batch,semester,department,start_term,end_term,subject_id,shift
         } = req.body;
-        var sql = "SELECT * FROM professor_schedule ps";
-        var sql = "INSERT INTO role (`name`,`code`,`discription`) VALUES (?,?,?)";
-        db.query(sql,[professor_id,subject_id,week_day,status,shift],(err,result)=>{
+        var sql = `SELECT * FROM professor_schedule ps where subject_id = ${subject_id}`;
+        // var sql = "INSERT INTO role (`name`,`code`,`discription`) VALUES (?,?,?)";
+        
+        db.query(sql,(err,result)=>{
+            var teacher = {}
+            for(var item of result.rows){
+               // console.log(result.rows[item].week_day)
+                teacher[item.professor_id] ??= {}
+                teacher[item.professor_id][item.week_day] ??= {}
+                teacher[item.professor_id][item.week_day][item.shift] = item.status     
+            }
+            result.rows = teacher
             if(!err){
                 res.json({
                     list : result
@@ -58,7 +67,12 @@ const create = (req,res) => {
         })
     // }
 };
-
+function getRandomDay(days) {
+    const randomIndex = Math.floor(Math.random() * days.length);
+    const randomDay = days[randomIndex];
+    days.splice(randomIndex, 1); // Remove the chosen day from the array
+    return randomDay;
+  }
 const update = (req,res) => {
     var message = {};
     var body = req.body;

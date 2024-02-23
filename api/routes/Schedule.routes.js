@@ -1,15 +1,15 @@
 const{
     getAll,
     create, 
-    update,
-    remove,
-    assignRole
+    // update,
+    // remove,
+    // assignRole
 } = require("../controller/Schedule.controller");
 
-const {validateToken} = require("../controller/auth.constroller")
+//const {validateToken} = require("../controller/auth.constroller")
 const schedule = (app)=>{
-    app.get("/api/schedule",validateToken,getAll)
-    app.post("/api/schedule",validateToken,assignRole)
+    app.get("/api/schedule",getAll)
+    app.post("/api/schedule",create)
    // app.post("/api/user",validateToken,create)
    // app.put("/api/user",validateToken,update)
    // app.delete("/api/user",validateToken,remove)
