@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
 
-
+require("./api/routes/Schedule.routes")(app)
 
 
 // const passEncrypt = bcrypt.hashSync("123",8);
@@ -28,3 +28,4 @@ app.listen(port,()=>{
     console.log("Server run on port : localhost:"+port)
 })
 
+ 
