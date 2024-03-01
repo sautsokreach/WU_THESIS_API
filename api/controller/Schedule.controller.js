@@ -48,10 +48,24 @@ const create = (req,res) => {
                 teacher[item.professor_id][item.week_day] ??= {}
                 teacher[item.professor_id][item.week_day][item.shift] = item.status     
             }
-            result.rows = teacher
+            console.log(teacher)
+
+            let count = countAvailable(teacher[1],'morning')
+            var teacherAvailable = [{"count":count,"teacherId":1}]
+
+
+            for(var id in teacher[getMinimumTeacherCount(teacherAvailable)[minTeacherId]]){
+               let day = []
+                if(id[shift] == 'available'){
+                    day.push()
+                }
+            }
+            getRandomDay(shift);
+            
+            //result.rows = teacher
             if(!err){
                 res.json({
-                    list : result
+                    list : getMinimumTeacherCount(teacherAvailable)
                 })
                 // if(result.affectedRows != 0){
                 //     res.json({
@@ -67,12 +81,37 @@ const create = (req,res) => {
         })
     // }
 };
+function getMinimumTeacherCount(list){
+    let minCount = list[0].count;
+let minTeacherId = list[0].teacherId;
+    for (let i = 1; i < list.length; i++) {
+        if (list[i].count < minCount) {
+            minCount = list[i].count;
+            minTeacherId = list[i].teacherId;
+        }
+    }
+    return [minCount,minTeacherId]
+}
 function getRandomDay(days) {
     const randomIndex = Math.floor(Math.random() * days.length);
     const randomDay = days[randomIndex];
     days.splice(randomIndex, 1); // Remove the chosen day from the array
     return randomDay;
   }
+
+  function countAvailable(array,checkShift) {
+    let count = 0;
+    console.log(array)
+    for (let day in array) {
+        for (let shift in array[day]) {
+            
+            if (array[day][shift] === "available" && shift === checkShift) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
 const update = (req,res) => {
     var message = {};
     var body = req.body;
