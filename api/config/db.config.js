@@ -1,5 +1,8 @@
-const { Pool } = require("pg");
+import pg from "pg";
 
+const { Pool } = pg;
+
+//aws Server
 const db = new Pool({
   user: "sautsokreach",
   host: "ep-rough-rice-922718.ap-southeast-1.aws.neon.tech",
@@ -13,4 +16,4 @@ const db = new Pool({
 
 db.connect();
 
-module.exports = db;
+export default db;
