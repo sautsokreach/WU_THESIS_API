@@ -14,6 +14,11 @@ const db = new Pool({
   },
 });
 
-db.connect();
+db.connect((err) => {
+  if (err) {
+    return console.log(err);
+  }
+  return console.log("Database Connected!");
+});
 
 export default db;
