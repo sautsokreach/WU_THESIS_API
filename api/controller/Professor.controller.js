@@ -2,7 +2,7 @@ import db from "../config/db.config.js";
 import { isEmpty } from "../config/hepler.js";
 
 const getAllProfessor = (req, res) => {
-  db.query("SELECT * FROM professor", (err, data) => {
+  db.query("SELECT professor_id id, first_name, last_name, department_id, phone_number, email, degree FROM professor", (err, data) => {
     res.json(data.rows);
   });
 };
@@ -25,10 +25,13 @@ const getOneProfessor = (req, res) => {
 };
 
 const createProfessor = (req, res) => {
-  const getFirstNameProfessor = req.body.FirstName;
-  const getLastNameProfessor = req.body.LastName;
-  const getPhoneNumberProfessor = req.body.PhoneNumber;
-  const getDepartmentProfessor = req.body.DepartmentProfessor;
+  const getFirstNameProfessor = req.body.first_name;
+  const getLastNameProfessor = req.body.last_name;
+  const getPhoneNumberProfessor = req.body.phone_number;
+  const getDepartmentProfessor = 1;
+  const email = req.body.email;
+  const degree = req.body.degree;
+
 
   if (isEmpty(getFirstNameProfessor)) {
     return res.json("Please Fill Professor First Name");
@@ -44,7 +47,7 @@ const createProfessor = (req, res) => {
   }
 
   const queryCreateProfessor =
-    "INSERT INTO professor (first_name, last_name, department_id, phone_number) VALUES ($1,$2,$3,$4)";
+    "INSERT INTO professor (first_name, last_name, department_id, phone_number,email,degree) VALUES ($1,$2,$3,$4,$5,$6)";
 
   db.query(
     queryCreateProfessor,
@@ -53,6 +56,8 @@ const createProfessor = (req, res) => {
       getLastNameProfessor,
       getDepartmentProfessor,
       getPhoneNumberProfessor,
+      email,
+      degree
     ],
     (err, data) => {
       if (err) {
@@ -83,11 +88,13 @@ const deleteProfessor = (req, res) => {
 
 const editProfessor = (req, res) => {
   const getIdProfessor = req.params.id;
-  const getFirstNameProfessor = req.body.FirstName;
-  const getLastNameProfessor = req.body.LastName;
-  const getPhoneNumberProfessor = req.body.PhoneNumber;
-  const getDepartmentProfessor = req.body.DepartmentProfessor;
-
+  const getFirstNameProfessor = req.body.first_name;
+  const getLastNameProfessor = req.body.last_name;
+  const getPhoneNumberProfessor = req.body.phone_number;
+  const getDepartmentProfessor = 1;
+  const email = req.body.email;
+  const degree = req.body.degree;
+  getDepartmentProfessor
   if (isEmpty(getFirstNameProfessor)) {
     return res.json("Please Fill Professor First Name");
   }
@@ -102,8 +109,8 @@ const editProfessor = (req, res) => {
   }
 
   const queryEditUniversity =
-    "update professor set first_name=$1, last_name=$2, department_id=$3, phone_number=$4 WHERE professor_id = $5";
-
+    "update professor set first_name=$1, last_name=$2, department_id=$3, phone_number=$4,email=$5, degree=$6 WHERE professor_id = $7";
+ 
   db.query(
     queryEditUniversity,
     [
@@ -111,9 +118,12 @@ const editProfessor = (req, res) => {
       getLastNameProfessor,
       getDepartmentProfessor,
       getPhoneNumberProfessor,
+      email,
+      degree,
       getIdProfessor,
     ],
     (err, data) => {
+
       if (err) {
         return res.json(err);
       }
