@@ -4,15 +4,15 @@ import {
   editDepartmentDegree,
   getOneDepartmentDegree,
   deleteDepartmentDegree,
-} from "../controller/Department.controller.js";
+} from "../controller/Department_Degree.controller copy.js";
 
 //const { validateToken } = require("../controller/auth.constroller");
 
-const departments = (app) => {
+const departmentDegree = (app) => {
   app.get("/api/departmentsDegree", getAllDepartmentDegree);
-  app.get("/api/departmentsDegree/:id", getOneDepartmentDegree);
-  app.post("/api/departmentsDegree", createDepartmentDegree);
-  app.put("/api/departmentsDegree/:id", editDepartmentDegree);
-  app.delete("/api/deleteDepartment/:id", deleteDepartmentDegree);
+  app.get("/api/departmentDegree/:id", getOneDepartmentDegree);
+  app.post("/api/createDepartmentDegree", createDepartmentDegree);
+  app.put("/api/editDepartmentDegree/:id", editDepartmentDegree);
+  app.delete("/api/deleteDepartmentDegree/:id", deleteDepartmentDegree);
 };
-export default departments;
+export default departmentDegree;

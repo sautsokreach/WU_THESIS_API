@@ -9,6 +9,7 @@ import university from "./api/routes/University.routes.js";
 import professor from "./api/routes/Professor.routes.js";
 import subject from "./api/routes/Subject.routes.js";
 import classes from "./api/routes/Class.routes.js";
+import departmentDegree from "./api/routes/Department_Degree.routes.js";
 
 var corsOptions = {
   origin: "*",
@@ -27,6 +28,7 @@ departments(app);
 university(app);
 professor(app);
 subject(app);
+departmentDegree(app);
 
 // Server Port
 

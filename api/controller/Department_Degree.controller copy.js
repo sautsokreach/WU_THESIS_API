@@ -7,10 +7,10 @@ const getAllDepartmentDegree = (req, res) => {
   });
 };
 
-const getOneDepartmentDegree  = (req, res) => {
+const getOneDepartmentDegree = (req, res) => {
   const id = req.params.id;
   const queryGetOneDepartmentDegree =
-    "Select * from department where department_degree_id = $1";
+    "Select * from department_degree where department_degree_id = $1";
 
   db.query(queryGetOneDepartmentDegree, [id], (err, data) => {
     if (err) {
@@ -19,62 +19,66 @@ const getOneDepartmentDegree  = (req, res) => {
     if (data.rowCount > 0) {
       return res.json(data.rows);
     } else {
-      return res.json("Department Not Found!");
+      return res.json("Department Degree Not Found!");
     }
   });
 };
 
-const createDepartmentDegree  = (req, res) => {
-  const getDepartmentId = req.body.department_id;
+const createDepartmentDegree = (req, res) => {
+  const getDepartmentDegreeId = req.body.department_id;
   const getDegree = req.body.degree;
   const getName = req.body.name;
 
-  if (isEmpty(getDepartmentId)) {
+  if (isEmpty(getDepartmentDegreeId)) {
     return res.json("Please Fill Department Name");
   }
 
-  const queryCreateDepartment =
-    "INSERT INTO department_degree (department_id,degree,name) VALUES ($1,$2,$3)";
+  const queryCreateDepartmentDegree =
+    "INSERT INTO department_degree (department_id,name, degree) VALUES ($1,$2,$3)";
 
-  db.query(queryCreateDepartment, [getDepartmentId,getDegree,getName], (err, data) => {
-    if (err) {
-      return res.json(err);
+  db.query(
+    queryCreateDepartmentDegree,
+    [getDepartmentDegreeId, getName, getDegree],
+    (err, data) => {
+      if (err) {
+        return res.json(err);
+      }
+      return res.status(200).json("Department and Degree Has Been Created!");
     }
-    return res.status(200).json("Department and Degree Has Been Created!");
-  });
+  );
 };
 
-const editDepartmentDegree  = (req, res) => {
+const editDepartmentDegree = (req, res) => {
   const getIdDepartmentDegree = req.params.id;
   const getDepartmentId = req.body.department_id;
   const getDegree = req.body.degree;
   const getName = req.body.name;
 
-  if (isEmpty(getDepartmentName)) {
-    return res.json("Please Fill Department Name");
+  if (isEmpty(getName)) {
+    return res.json("Please Fill Degree Name");
   }
 
-  const queryEditDepartment =
-    "update department set  department_id = $1 ,degree = $2 ,name = $3 WHERE department_id = $4";
+  const queryEditDepartmentDegree =
+    "update department_degree set department_id = $1 ,name = $2 ,degree = $3 WHERE department_degree_id = $4";
 
   db.query(
-    queryEditDepartment,
-    [getDepartmentId,getDegree,getName, getIdDepartmentDegree],
+    queryEditDepartmentDegree,
+    [getDepartmentId, getName, getDegree, getIdDepartmentDegree],
     (err, data) => {
       if (err) {
         return res.json(err);
       }
-      return res.status(200).json("Department  and Degree Has Been Edited!");
+      return res.status(200).json("Department and Degree Has Been Edited!");
     }
   );
 };
 
-const deleteDepartmentDegree  = (req, res) => {
-  const getIdDepartment = req.params.id;
+const deleteDepartmentDegree = (req, res) => {
+  const getIdDepartmentDegree = req.params.id;
 
   db.query(
-    "Delete from department where department_degree_id = $1",
-    [getIdDepartment],
+    "Delete from department_degree where department_degree_id = $1",
+    [getIdDepartmentDegree],
     (err, data) => {
       if (err) return res.json(err);
       return res.status(200).json("Department and Degree Has Been Deleted!");
