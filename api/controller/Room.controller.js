@@ -2,7 +2,7 @@ import db from "../config/db.config.js";
 import { isEmpty } from "../config/hepler.js";
 
 const getAllRoom = (req, res) => {
-  db.query("SELECT * FROM room", (err, data) => {
+  db.query("SELECT * FROM room  where status <> 'delete'", (err, data) => {
     res.json(data.rows);
   });
 };
@@ -20,17 +20,20 @@ const getOneRoom = (req, res) => {
 };
 
 const createRoom = (req, res) => {
-  const getRoomNumber = req.body.roomNumber;
+  const getRoomNumber = req.body.room_number;
   const getStatus = req.body.status;
   const getComment = req.body.comment;
+  const getFloor = req.body.floor;
+  const getSeat = req.body.seat;
 
   const queryCreateRoom =
-    "INSERT INTO room (room_number,status,comment) VALUES ($1,$2,$3)";
+    "INSERT INTO room (room_number,status,comment,floor,seat) VALUES ($1,$2,$3,$4,$5)";
 
   db.query(
     queryCreateRoom,
-    [getRoomNumber, getStatus, getComment],
+    [getRoomNumber, getStatus, getComment,getFloor,getSeat],
     (err, data) => {
+    
       if (err) {
         return res.json(err);
       }
@@ -41,9 +44,11 @@ const createRoom = (req, res) => {
 
 const editRoom = (req, res) => {
   const getIdRoom = req.params.id;
-  const getRoomNumber = req.body.roomNumber;
+  const getRoomNumber = req.body.room_number;
   const getStatus = req.body.status;
   const getComment = req.body.comment;
+  const getFloor = req.body.floor;
+  const getSeat = req.body.seat;
 
   // console.log(getIdRoom);
   // console.log(getRoomNumber);
@@ -58,11 +63,11 @@ const editRoom = (req, res) => {
   }
 
   const queryEditRoom =
-    "update room set room_number = $1 , status = $2, comment =$3 WHERE room_id = $4";
+    "update room set room_number = $1 , status = $2, comment =$3,floor = $4, seat = $5 WHERE room_id = $6";
 
   db.query(
     queryEditRoom,
-    [getRoomNumber, getStatus, getComment, getIdRoom],
+    [getRoomNumber, getStatus, getComment,getFloor,getSeat,getIdRoom],
     (err, data) => {
       if (err) {
         return res.json(err);
@@ -71,4 +76,24 @@ const editRoom = (req, res) => {
     }
   );
 };
-export { getAllRoom, createRoom, editRoom, getOneRoom };
+
+const deleteRoom = (req, res) => {
+  const getIdRoom = req.params.id;
+
+  if (isEmpty(getIdRoom)) {
+    return res.json("Can't Get ID Room");
+  }
+
+  db.query(
+    "update room set status = 'delete'   WHERE room_id = $1",
+    [getIdRoom],
+    (err, data) => {
+      console.log(err)
+      console.log(data)
+      if (err) return res.json(err);
+
+      return res.status(200).json("Room Has Been Deleted!");
+    }
+  );
+};
+export { getAllRoom, createRoom, editRoom, getOneRoom,deleteRoom };

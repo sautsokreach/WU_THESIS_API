@@ -2,7 +2,7 @@ import db from "../config/db.config.js";
 import { isEmpty } from "../config/hepler.js";
 
 const getAllProfessor = (req, res) => {
-  db.query("SELECT professor_id id, first_name, last_name, department_id, phone_number, email, degree FROM professor", (err, data) => {
+  db.query("SELECT * FROM professor", (err, data) => {
     res.json(data.rows);
   });
 };

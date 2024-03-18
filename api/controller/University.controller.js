@@ -25,11 +25,11 @@ const getOneUniversity = (req, res) => {
 };
 
 const createUniversity = (req, res) => {
-  const getUniversityNameEN = req.body.UniversityNameEN;
-  const getUniversityNameKH = req.body.UniversityNameKH;
-  const getUniversityLocation = req.body.UniversityLocation;
-  const getUniversityWebsite = req.body.UniversityWebsite;
-  const getUniversityLogo = req.body.UniversityLogo;
+  const getUniversityNameEN = req.body.name_en;
+  const getUniversityNameKH = req.body.name_kh;
+  const getUniversityLocation = req.body.location;
+  const getUniversityWebsite = req.body.website;
+  const getUniversityLogo = req.body.logo;
 
   if (isEmpty(getUniversityNameKH)) {
     return res.json("Please Fill University Khmer Name");
@@ -70,11 +70,11 @@ const createUniversity = (req, res) => {
 
 const editUniversity = (req, res) => {
   const getIdUniversity = req.params.id;
-  const getUniversityNameEN = req.body.UniversityNameEN;
-  const getUniversityNameKH = req.body.UniversityNameKH;
-  const getUniversityLocation = req.body.UniversityLocation;
-  const getUniversityWebsite = req.body.UniversityWebsite;
-  const getUniversityLogo = req.body.UniversityLogo;
+  const getUniversityNameEN = req.body.name_en;
+  const getUniversityNameKH = req.body.name_kh;
+  const getUniversityLocation = req.body.location;
+  const getUniversityWebsite = req.body.website;
+  const getUniversityLogo = req.body.logo;
 
   if (isEmpty(getUniversityNameKH)) {
     return res.json("Please Fill University Khmer Name");

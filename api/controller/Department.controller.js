@@ -25,7 +25,7 @@ const getOneDepartment = (req, res) => {
 };
 
 const createDepartment = (req, res) => {
-  const getDepartmentName = req.body.DepartmentName;
+  const getDepartmentName = req.body.department_name;
 
   if (isEmpty(getDepartmentName)) {
     return res.json("Please Fill Department Name");
@@ -44,7 +44,7 @@ const createDepartment = (req, res) => {
 
 const editDepartment = (req, res) => {
   const getIdDepartment = req.params.id;
-  const getDepartmentName = req.body.DepartmentName;
+  const getDepartmentName = req.body.department_name;
 
   if (isEmpty(getDepartmentName)) {
     return res.json("Please Fill Department Name");
