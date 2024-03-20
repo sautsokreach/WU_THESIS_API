@@ -9,125 +9,152 @@ const getAllProfessor_Schedule = (req, res) => {
 
 const getOneProfessor_Schedule = (req, res) => {
   const id = req.params.id;
-  const queryGetOneProfessor =
-    "Select * from professor where professor_id = $1";
+  const queryGetOneProfessorSchedule =
+    "Select * from professor where professor_schedule_id = $1";
 
-  db.query(queryGetOneProfessor, [id], (err, data) => {
+  db.query(queryGetOneProfessorSchedule, [id], (err, data) => {
     if (err) {
       return res.json(err);
     }
     if (data.rowCount > 0) {
       return res.json(data.rows);
     } else {
-      return res.json("Professor Not Found!");
+      return res.json("Professor Schedule Not Found!");
     }
   });
 };
 
 const createProfessor_Schedule = (req, res) => {
-  const getFirstNameProfessor = req.body.first_name;
-  const getLastNameProfessor = req.body.last_name;
-  const getPhoneNumberProfessor = req.body.phone_number;
-  const getDepartmentProfessor = 1;
-  const email = req.body.email;
-  const degree = req.body.degree;
+  const getProfessorID = req.body.professor_id;
+  const getSubjectId = req.body.subject_id;
+  const getSemester = req.body.semester;
+  const getBatch = req.body.batch;
+  const getYear = req.body.year;
 
 
-  if (isEmpty(getFirstNameProfessor)) {
-    return res.json("Please Fill Professor First Name");
+  if (isEmpty(getProfessorID)) {
+    return res.json("Please Fill Professor Name");
   }
-  if (isEmpty(getLastNameProfessor)) {
-    return res.json("Please Fill Professor Last Name");
+  if (isEmpty(getSubjectId)) {
+    return res.json("Please Fill Subject Name");
   }
-  if (isEmpty(getDepartmentProfessor)) {
-    return res.json("Please Input Professor Department");
+  if (isEmpty(getSemester)) {
+    return res.json("Please Input Semester");
   }
-  if (isEmpty(getPhoneNumberProfessor)) {
-    return res.json("Please Input Professor Phone Number");
+  if (isEmpty(getBatch)) {
+    return res.json("Please Input Batch");
+  }
+  if (isEmpty(getYear)) {
+    return res.json("Please Input Year");
   }
 
   const queryCreateProfessor =
-    "INSERT INTO professor (first_name, last_name, department_id, phone_number,email,degree) VALUES ($1,$2,$3,$4,$5,$6)";
+    "INSERT INTO professor_schedule (professor_id, subject_id, semester, batch,year) VALUES ($1,$2,$3,$4,$5)";
 
   db.query(
     queryCreateProfessor,
     [
-      getFirstNameProfessor,
-      getLastNameProfessor,
-      getDepartmentProfessor,
-      getPhoneNumberProfessor,
-      email,
-      degree
+        getProfessorID,
+        getSubjectId,
+        getSemester,
+        getBatch,
+        getYear
     ],
     (err, data) => {
       if (err) {
         return res.json(err);
       }
-      return res.status(200).json("Professor Has Been Created!");
+      return res.status(200).json("Professor Schedule Has Been Created!");
     }
   );
 };
 
 const deleteProfessor_Schedule = (req, res) => {
-  const getIdProfessor = req.params.id;
+  const getIdProfessorSchedule = req.params.id;
 
-  if (isEmpty(getIdProfessor)) {
-    return res.json("Can't Get ID Professor");
+  if (isEmpty(getIdProfessorSchedule)) {
+    return res.json("Can't Get ID ProfessorSchedule");
   }
 
   db.query(
-    "Delete from professor where professor_id =$1",
-    [getIdProfessor],
+    "Delete from professor_schedule where professor_schedule_id =$1",
+    [getIdProfessorSchedule],
     (err, data) => {
       if (err) return res.json(err);
 
-      return res.status(200).json("Professor Has Been Deleted!");
+      return res.status(200).json("Professor Schedule Has Been Deleted!");
     }
   );
 };
 
 const editProfessor_Schedule = (req, res) => {
-  const getIdProfessor = req.params.id;
-  const getFirstNameProfessor = req.body.first_name;
-  const getLastNameProfessor = req.body.last_name;
-  const getPhoneNumberProfessor = req.body.phone_number;
-  const getDepartmentProfessor = 1;
-  const email = req.body.email;
-  const degree = req.body.degree;
-  getDepartmentProfessor
-  if (isEmpty(getFirstNameProfessor)) {
-    return res.json("Please Fill Professor First Name");
-  }
-  if (isEmpty(getLastNameProfessor)) {
-    return res.json("Please Fill Professor Last Name");
-  }
-  if (isEmpty(getDepartmentProfessor)) {
-    return res.json("Please Input Professor Department");
-  }
-  if (isEmpty(getPhoneNumberProfessor)) {
-    return res.json("Please Input Professor Phone Number");
-  }
+    const getProfessorScheduleID = req.body.professor_schedule_id;
+    const getProfessorID = req.body.professor_id;
+    const getSubjectId = req.body.subject_id;
+    const getSemester = req.body.semester;
+    const getBatch = req.body.batch;
+    const getYear = req.body.year;
+  
+    if (isEmpty(getProfessorID)) {
+        return res.json("Please Fill Professor Name");
+      }
+      if (isEmpty(getSubjectId)) {
+        return res.json("Please Fill Subject Name");
+      }
+      if (isEmpty(getSemester)) {
+        return res.json("Please Input Semester");
+      }
+      if (isEmpty(getBatch)) {
+        return res.json("Please Input Batch");
+      }
+      if (isEmpty(getYear)) {
+        return res.json("Please Input Year");
+      }
 
   const queryEditUniversity =
-    "update professor set first_name=$1, last_name=$2, department_id=$3, phone_number=$4,email=$5, degree=$6 WHERE professor_id = $7";
- 
+    "update professor_schedule set professor_id=$1, subject_id=$2, semester=$3, batch=$4,year=$5 WHERE professor_schedule_id = $6";
   db.query(
     queryEditUniversity,
     [
-      getFirstNameProfessor,
-      getLastNameProfessor,
-      getDepartmentProfessor,
-      getPhoneNumberProfessor,
-      email,
-      degree,
-      getIdProfessor,
+        getProfessorID,
+        getSubjectId,
+        getSemester,
+        getBatch,
+        getYear,
+        getProfessorScheduleID
     ],
     (err, data) => {
-
+      
       if (err) {
         return res.json(err);
       }
       return res.status(200).json("Professor Has Been Edited!");
+    }
+  );
+};
+const editProfessor_Schedule_Day = (req, res) => {
+    const getProfessorScheduleID = req.body.professor_schedule_id;
+    const getProfessorScheduleDay = req.body.professor_schedule_day;
+  
+    if (isEmpty(getProfessorScheduleID)) {
+        return res.json("Please Fill Professor Name");
+      }
+
+  const queryEditUniversity =
+    "update professor_schedule set schedule=$1 WHERE professor_schedule_id = $2";
+  db.query(
+    queryEditUniversity,
+    [
+        getProfessorScheduleDay,
+        getProfessorScheduleID
+    ],
+    (err, data) => {
+        console.log(err)
+        console.log(data)
+      if (err) {
+        return res.json(err);
+      }
+      return res.status(200).json("Schedule Has Been Edited!");
     }
   );
 };
@@ -137,4 +164,5 @@ export {
   createProfessor_Schedule,
   editProfessor_Schedule,
   deleteProfessor_Schedule,
+  editProfessor_Schedule_Day,
 };

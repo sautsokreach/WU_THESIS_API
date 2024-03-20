@@ -20,9 +20,9 @@ const getOneSubject = (req, res) => {
 };
 
 const createSubject = (req, res) => {
-  const getSubjectName = req.body.SubjectName;
-  const getSubjectCode = req.body.SubjectCode;
-  const getDepartmentId = req.body.DepartmentId;
+  const getSubjectName = req.body.subject_name;
+  const getSubjectCode = req.body.subject_code;
+  const getDepartmentId = 1;
 
   if (isEmpty(getSubjectName)) {
     return res.json("Please Fill Subject Name");
@@ -51,9 +51,9 @@ const createSubject = (req, res) => {
 
 const editSubject = (req, res) => {
   const getIdSubject = req.params.id;
-  const getSubjectName = req.body.SubjectName;
-  const getSubjectCode = req.body.SubjectCode;
-  const getDepartmentId = req.body.DepartmentId;
+  const getSubjectName = req.body.subject_name;
+  const getSubjectCode = req.body.subject_code;
+  const getDepartmentId = 1;
 
   if (isEmpty(getSubjectName)) {
     return res.json("Please Fill Subject Name");
