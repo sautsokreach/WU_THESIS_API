@@ -4,7 +4,7 @@ import {
   editDepartmentDegree,
   getOneDepartmentDegree,
   deleteDepartmentDegree,
-} from "../controller/Department_Degree.controller copy.js";
+} from "../controller/Department_Degree.controller.js";
 
 //const { validateToken } = require("../controller/auth.constroller");
 
