@@ -39,8 +39,10 @@ const login = async (req, res) => {
   const userName = req.body.username;
   const passwordUser = req.body.password;
 
+  //console.log(userName, passwordUser);
+
   // Verify User
-  const querySelectAll = "SELECT * FROM users WHERE username=$1";
+  const querySelectAll = "SELECT * FROM user_login WHERE username=$1";
   const { rows } = await db.query(querySelectAll, [userName]);
   if (rows.length === 0) return res.status(404).json("User Not Found!");
 
@@ -55,7 +57,7 @@ const login = async (req, res) => {
   // Send Cookie to Client
   res
     .cookie("access_token", token, {
-      httpOnly: true,
+      httpOnly: false,
     })
     .status(200)
     .json(other);
