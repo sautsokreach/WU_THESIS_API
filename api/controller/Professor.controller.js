@@ -32,7 +32,6 @@ const createProfessor = (req, res) => {
   const email = req.body.email;
   const degree = req.body.degree;
 
-
   if (isEmpty(getFirstNameProfessor)) {
     return res.json("Please Fill Professor First Name");
   }
@@ -57,7 +56,7 @@ const createProfessor = (req, res) => {
       getDepartmentProfessor,
       getPhoneNumberProfessor,
       email,
-      degree
+      degree,
     ],
     (err, data) => {
       if (err) {
@@ -94,7 +93,7 @@ const editProfessor = (req, res) => {
   const getDepartmentProfessor = 1;
   const email = req.body.email;
   const degree = req.body.degree;
-  getDepartmentProfessor
+  getDepartmentProfessor;
   if (isEmpty(getFirstNameProfessor)) {
     return res.json("Please Fill Professor First Name");
   }
@@ -110,7 +109,7 @@ const editProfessor = (req, res) => {
 
   const queryEditUniversity =
     "update professor set first_name=$1, last_name=$2, department_id=$3, phone_number=$4,email=$5, degree=$6 WHERE professor_id = $7";
- 
+
   db.query(
     queryEditUniversity,
     [
@@ -123,7 +122,6 @@ const editProfessor = (req, res) => {
       getIdProfessor,
     ],
     (err, data) => {
-
       if (err) {
         return res.json(err);
       }
