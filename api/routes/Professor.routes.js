@@ -1,5 +1,6 @@
 import {
   getAllProfessor,
+  getAvailableProfessor,
   getOneProfessor,
   createProfessor,
   editProfessor,
@@ -11,6 +12,7 @@ import {
 const professor = (app) => {
   app.get("/api/professors", getAllProfessor);
   app.get("/api/professor/:id", getOneProfessor);
+  app.post("/api/getAvailableProfessor", getAvailableProfessor);
   app.post("/api/createProfessor", createProfessor);
   app.put("/api/editProfessor/:id", editProfessor);
   app.delete("/api/deleteProfessor/:id", deleteProfessor);

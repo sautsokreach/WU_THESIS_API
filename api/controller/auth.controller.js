@@ -55,6 +55,8 @@ const login = async (req, res) => {
   const { password, ...other } = rows[0];
 
   // Send Cookie to Client
+  console.log(token)
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res
     .cookie("access_token", token, {
       httpOnly: false,
