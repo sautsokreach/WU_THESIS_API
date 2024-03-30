@@ -17,6 +17,7 @@ var corsOptions = {
   credentials: true,
   origin: "http://localhost:3000",
 };
+
 const app = express();
 
 // Middleware
