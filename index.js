@@ -14,7 +14,8 @@ import departmentDegree from "./api/routes/Department_Degree.routes.js";
 import Auth from "./api/routes/auth.routes.js";
 
 var corsOptions = {
-  origin: "*",
+  credentials: true,
+  origin: "http://localhost:3000",
 };
 const app = express();
 

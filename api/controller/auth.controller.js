@@ -1,6 +1,7 @@
 import db from "../config/db.config.js";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
+import { isEmpty } from "../config/hepler.js";
 
 const register = async (req, res) => {
   const userName = req.body.name;
@@ -73,4 +74,18 @@ const logout = (req, res) => {
     .json("User has been logged out.");
 };
 
-export { login, logout, register };
+const editUser = (req, res) => {
+  const userId = req.params.id;
+  const userName = req.body.username;
+  const email = req.body.email;
+  const title = req.body.title;
+  const place = req.body.place;
+  const about = req.body.about;
+
+  if (isEmpty(userName)) return res.json("Please Input Name");
+  if (isEmpty(email)) return res.json("Please Input Email");
+
+  console.log(userId, userName, email, title, place, about);
+};
+
+export { login, logout, register, editUser };
