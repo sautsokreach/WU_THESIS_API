@@ -53,7 +53,7 @@ const login = async (req, res) => {
 
   // Create Cookie
   const token = Jwt.sign({ id: rows[0].id }, "jwtkey");
-  const { password, ...other } = rows[0];
+  const { password, reg_date, ...other } = rows[0];
 
   // Send Cookie to Client
   //console.log(token);
@@ -71,7 +71,7 @@ const logout = (req, res) => {
     .json("User has been logged out.");
 };
 
-const editUser = async (req, res) => {
+const editUser = (req, res) => {
   const userId = req.params.id;
   const userName = req.body.username;
   const email = req.body.email;
@@ -82,11 +82,10 @@ const editUser = async (req, res) => {
   // console.log(userId, userName, email, title, place, about);
 
   if (isEmpty(userName)) return res.json("Please Input Name");
-  if (isEmpty(email)) return res.json("Please Input Email");
 
   const queryUser =
     "update user_login set username =$1, email=$2, title =$3, place =$4, about=$5  where user_id = $6";
-  await db.query(
+  db.query(
     queryUser,
     [userName, email, title, place, about, userId],
     (err, data) => {
