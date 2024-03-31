@@ -31,9 +31,8 @@ const createRoom = (req, res) => {
 
   db.query(
     queryCreateRoom,
-    [getRoomNumber, getStatus, getComment,getFloor,getSeat],
+    [getRoomNumber, getStatus, getComment, getFloor, getSeat],
     (err, data) => {
-    
       if (err) {
         return res.json(err);
       }
@@ -67,7 +66,7 @@ const editRoom = (req, res) => {
 
   db.query(
     queryEditRoom,
-    [getRoomNumber, getStatus, getComment,getFloor,getSeat,getIdRoom],
+    [getRoomNumber, getStatus, getComment, getFloor, getSeat, getIdRoom],
     (err, data) => {
       if (err) {
         return res.json(err);
@@ -88,12 +87,41 @@ const deleteRoom = (req, res) => {
     "update room set status = 'delete'   WHERE room_id = $1",
     [getIdRoom],
     (err, data) => {
-      console.log(err)
-      console.log(data)
+      console.log(err);
+      console.log(data);
       if (err) return res.json(err);
 
       return res.status(200).json("Room Has Been Deleted!");
     }
   );
 };
-export { getAllRoom, createRoom, editRoom, getOneRoom,deleteRoom };
+
+const getAvailableRoom = (req, res) => {
+  const weekDay = req.body.day;
+  const shift = req.body.shift;
+  const date = req.body.date;
+
+  console.log(weekDay, shift, date);
+
+  const queryAvailableRoom = `SELECT * FROM room r where not exists (select 1 from schedule_day sd 
+      join schedule s on s.schedule_id = sd.schedule_id 
+      where sd.weekday = $1 and s.shift = $2 and CAST($3 AS DATE)
+      < term_end   and sd.room_id = r.room_id  ) and r.status = 'available'`;
+
+  db.query(queryAvailableRoom, [weekDay, shift, date], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data.rows);
+  });
+};
+
+const getAvailableRooms = (req, res) => {};
+
+export {
+  getAllRoom,
+  createRoom,
+  editRoom,
+  getOneRoom,
+  deleteRoom,
+  getAvailableRoom,
+  getAvailableRooms,
+};
