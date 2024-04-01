@@ -20,34 +20,86 @@ const getOneSchedule = (req, res) => {
 };
 
 const createSchedule = (req, res) => {
-  const getSubjectName = req.body.subject_name;
-  const getSubjectCode = req.body.subject_code;
-  const getDepartmentId = 1;
-
-  if (isEmpty(getSubjectName)) {
-    return res.json("Please Fill Subject Name");
-  }
-  if (isEmpty(getSubjectCode)) {
-    return res.json("Please Fill Subject Code");
-  }
-  if (isEmpty(getDepartmentId)) {
-    return res.json("Department ID Not Found!");
-  }
-
-  const queryCreateRoom =
-    "INSERT INTO subject ( subject_name, subject_code, department_id) VALUES ($1,$2,$3)";
-
-  db.query(
-    queryCreateRoom,
-    [getSubjectName, getSubjectCode, getDepartmentId],
-    (err, data) => {
-      if (err) {
-        return res.json(err);
-      }
-      return res.status(200).json("Subject Has Been Created!");
+    const universityId = req.body.university_id;
+    const batch = req.body.batch;
+    const semester = req.body.semester;
+    const year = req.body.year;
+    const termStart = req.body.term_start;
+    const termEnd = req.body.term_end;
+    const departmentId = req.body.department_id;
+    const degree = req.body.degree;
+    const shift = req.body.shift;
+    const description = req.body.description;
+    const academic = req.body.academic;
+  
+    if (isEmpty(universityId)) {
+      return res.json("Can't Get University");
     }
-  );
-};
+    if (isEmpty(batch)) {
+      return res.json("Can't Get Batch");
+    }
+    if (isEmpty(semester)) {
+      return res.json("Can't Get Semester");
+    }
+    if (isEmpty(year)) {
+      return res.json("Can't Get Year");
+    }
+    if (isEmpty(termStart)) {
+      return res.json("Can't Get Term Start");
+    }
+    if (isEmpty(termEnd)) {
+      return res.json("Can't Get Term End");
+    }
+    if (isEmpty(departmentId)) {
+      return res.json("Can't Get Department");
+    }
+    if (isEmpty(degree)) {
+      return res.json("Can't Get Degree");
+    }
+    if (isEmpty(shift)) {
+      return res.json("Can't Get Shift");
+    }
+    if (isEmpty(academic)) {
+      return res.json("Can't Get Academic");
+    }
+  
+    const querySchedule = `Insert into schedule (
+       university_id, batch, semester, year, term_start, term_end, department_id,  degree, shift, academic)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
+  
+    db.query(
+      querySchedule,
+      [
+        universityId,
+        batch,
+        semester,
+        year,
+        termStart,
+        termEnd,
+        departmentId,
+        degree,
+        shift,
+        academic,
+      ],
+      (err, data) => {
+        if (err) return res.json(err);
+        return res.status(200).json("Schedule Created!");
+      }
+    );
+  
+    //   console.log(
+    //     universityId,
+    //     batch,
+    //     semester,
+    //     year,
+    //     termStart,
+    //     termEnd,
+    //     departmentId,
+    //     degree,
+    //     shift,
+    //     academic
+    //   );
+  };
 
 const editSchedule = (req, res) => {
   const getIdSubject = req.params.id;
