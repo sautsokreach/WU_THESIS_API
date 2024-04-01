@@ -2,7 +2,7 @@ import db from "../config/db.config.js";
 import { isEmpty } from "../config/hepler.js";
 
 const getAllScheduleDays = (req, res) => {
-  db.query("SELECT * FROM schedule_day", (err, data) => {
+  db.query(`select * from schedule_day sd left join subject s on s.subject_id = sd.subject_id left join professor p on p.professor_id = sd.professor_id left join room r on r.room_id = sd.room_id where schedule_id = ${req.params.id}  `, (err, data) => {
     res.json(data.rows);
   });
 };

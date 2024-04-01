@@ -2,7 +2,25 @@ import db from "../config/db.config.js";
 import { isEmpty } from "../config/hepler.js";
 
 const getAllSchedules = (req, res) => {
-  db.query("SELECT * FROM schedule", (err, data) => {
+  db.query(`
+  SELECT 
+  s.*, 
+  p.professor_id AS preparer_id,
+  concat(p.first_name ,' ',p.last_name) AS preparer_name,
+  p1.professor_id AS approver_id,
+  concat(p1.first_name,' ' ,p1.last_name) AS approver_name,
+  m.*,d.*
+FROM 
+  schedule s 
+LEFT JOIN 
+  professor p ON s.preparer = p.professor_id 
+LEFT JOIN 
+  professor p1 ON s.approver = p1.professor_id
+LEFT JOIN 
+  major m  ON  s.major_id = m.major_id
+LEFT JOIN 
+  department d  ON  s.department_id = d.department_id ;
+  `, (err, data) => {
     res.json(data.rows);
   });
 };
