@@ -11,10 +11,14 @@ import subject from "./api/routes/Subject.routes.js";
 import classes from "./api/routes/Class.routes.js";
 import professor_schedule from "./api/routes/Professor_Schedule.routes.js";
 import departmentDegree from "./api/routes/Department_Degree.routes.js";
+import Auth from "./api/routes/auth.routes.js";
+import User from "./api/routes/UserLogin.routes.js";
 
 var corsOptions = {
-  origin: "*",
+  credentials: true,
+  origin: "http://localhost:3000",
 };
+
 const app = express();
 
 // Middleware
@@ -29,8 +33,10 @@ departments(app);
 university(app);
 professor(app);
 subject(app);
-professor_schedule(app)
+professor_schedule(app);
 departmentDegree(app);
+Auth(app);
+User(app);
 
 // Server Port
 

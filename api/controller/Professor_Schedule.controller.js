@@ -31,7 +31,6 @@ const createProfessor_Schedule = (req, res) => {
   const getBatch = req.body.batch;
   const getYear = req.body.year;
 
-
   if (isEmpty(getProfessorID)) {
     return res.json("Please Fill Professor Name");
   }
@@ -53,13 +52,7 @@ const createProfessor_Schedule = (req, res) => {
 
   db.query(
     queryCreateProfessor,
-    [
-        getProfessorID,
-        getSubjectId,
-        getSemester,
-        getBatch,
-        getYear
-    ],
+    [getProfessorID, getSubjectId, getSemester, getBatch, getYear],
     (err, data) => {
       if (err) {
         return res.json(err);
@@ -88,43 +81,42 @@ const deleteProfessor_Schedule = (req, res) => {
 };
 
 const editProfessor_Schedule = (req, res) => {
-    const getProfessorScheduleID = req.body.professor_schedule_id;
-    const getProfessorID = req.body.professor_id;
-    const getSubjectId = req.body.subject_id;
-    const getSemester = req.body.semester;
-    const getBatch = req.body.batch;
-    const getYear = req.body.year;
-  
-    if (isEmpty(getProfessorID)) {
-        return res.json("Please Fill Professor Name");
-      }
-      if (isEmpty(getSubjectId)) {
-        return res.json("Please Fill Subject Name");
-      }
-      if (isEmpty(getSemester)) {
-        return res.json("Please Input Semester");
-      }
-      if (isEmpty(getBatch)) {
-        return res.json("Please Input Batch");
-      }
-      if (isEmpty(getYear)) {
-        return res.json("Please Input Year");
-      }
+  const getProfessorScheduleID = req.body.professor_schedule_id;
+  const getProfessorID = req.body.professor_id;
+  const getSubjectId = req.body.subject_id;
+  const getSemester = req.body.semester;
+  const getBatch = req.body.batch;
+  const getYear = req.body.year;
+
+  if (isEmpty(getProfessorID)) {
+    return res.json("Please Fill Professor Name");
+  }
+  if (isEmpty(getSubjectId)) {
+    return res.json("Please Fill Subject Name");
+  }
+  if (isEmpty(getSemester)) {
+    return res.json("Please Input Semester");
+  }
+  if (isEmpty(getBatch)) {
+    return res.json("Please Input Batch");
+  }
+  if (isEmpty(getYear)) {
+    return res.json("Please Input Year");
+  }
 
   const queryEditUniversity =
     "update professor_schedule set professor_id=$1, subject_id=$2, semester=$3, batch=$4,year=$5 WHERE professor_schedule_id = $6";
   db.query(
     queryEditUniversity,
     [
-        getProfessorID,
-        getSubjectId,
-        getSemester,
-        getBatch,
-        getYear,
-        getProfessorScheduleID
+      getProfessorID,
+      getSubjectId,
+      getSemester,
+      getBatch,
+      getYear,
+      getProfessorScheduleID,
     ],
     (err, data) => {
-      
       if (err) {
         return res.json(err);
       }
@@ -133,24 +125,21 @@ const editProfessor_Schedule = (req, res) => {
   );
 };
 const editProfessor_Schedule_Day = (req, res) => {
-    const getProfessorScheduleID = req.body.professor_schedule_id;
-    const getProfessorScheduleDay = req.body.professor_schedule_day;
-  
-    if (isEmpty(getProfessorScheduleID)) {
-        return res.json("Please Fill Professor Name");
-      }
+  const getProfessorScheduleID = req.body.professor_schedule_id;
+  const getProfessorScheduleDay = req.body.professor_schedule_day;
+
+  if (isEmpty(getProfessorScheduleID)) {
+    return res.json("Please Fill Professor Name");
+  }
 
   const queryEditUniversity =
     "update professor_schedule set schedule=$1 WHERE professor_schedule_id = $2";
   db.query(
     queryEditUniversity,
-    [
-        getProfessorScheduleDay,
-        getProfessorScheduleID
-    ],
+    [getProfessorScheduleDay, getProfessorScheduleID],
     (err, data) => {
-        console.log(err)
-        console.log(data)
+      console.log(err);
+      console.log(data);
       if (err) {
         return res.json(err);
       }
