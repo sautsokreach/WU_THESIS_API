@@ -2,9 +2,12 @@ import db from "../config/db.config.js";
 import { isEmpty } from "../config/hepler.js";
 
 const getAllDepartmentDegree = (req, res) => {
-  db.query("select * from department_degree", (err, data) => {
-    res.json(data.rows);
-  });
+  db.query(
+    "select dd.department_degree_id, d.department_id, d.department_name, major,degree,status from department_degree as dd inner join department as d on dd.department_id = d.department_id",
+    (err, data) => {
+      res.json(data.rows);
+    }
+  );
 };
 
 const getOneDepartmentDegree = (req, res) => {

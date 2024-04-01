@@ -13,6 +13,7 @@ import professor_schedule from "./api/routes/Professor_Schedule.routes.js";
 import departmentDegree from "./api/routes/Department_Degree.routes.js";
 import Auth from "./api/routes/auth.routes.js";
 import User from "./api/routes/UserLogin.routes.js";
+import Schedule from "./api/routes/Schedule.routes.js";
 
 var corsOptions = {
   credentials: true,
@@ -37,6 +38,7 @@ professor_schedule(app);
 departmentDegree(app);
 Auth(app);
 User(app);
+Schedule(app);
 
 // Server Port
 
