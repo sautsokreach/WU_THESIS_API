@@ -3,11 +3,7 @@ import { isEmpty } from "../config/hepler.js";
 
 const getAllDepartmentDegree = (req, res) => {
   db.query(
-<<<<<<< HEAD:api/controller/Department_Degree.controller.js
-    "select dd.major_id, d.department_id, d.department_name, major,degree,status from major as dd inner join department as d on dd.department_id = d.department_id",
-=======
     "select m.major_id, d.department_id, d.department_name, major,degree,status from major as m inner join department as d on m.department_id = d.department_id",
->>>>>>> 14f7613cd1e2920f10bcddafefe4525e4f26016c:api/controller/Major.controller.js
     (err, data) => {
       res.json(data.rows);
     }
