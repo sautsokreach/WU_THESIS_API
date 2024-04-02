@@ -3,6 +3,7 @@ import { isEmpty } from "../config/hepler.js";
 
 const getAllProfessor = (req, res) => {
   db.query("SELECT * FROM professor", (err, data) => {
+    console.log(data)
     res.json(data.rows);
   });
 };
