@@ -3,7 +3,7 @@ import { isEmpty } from "../config/hepler.js";
 
 const getAllDepartmentDegree = (req, res) => {
   db.query(
-    "select m.major_id, d.department_id, d.department_name, major,degree,status from major as m inner join department as d on m.department_id = d.department_id",
+    "select m.major_id, d.department_id, d.department_name, major_name,degree,status from major as m inner join department as d on m.department_id = d.department_id",
     (err, data) => {
       res.json(data.rows);
     }
@@ -30,14 +30,14 @@ const getOneDepartmentDegree = (req, res) => {
 const createDepartmentDegree = (req, res) => {
   const getDepartmentId = req.body.department_id;
   const getDegree = req.body.degree;
-  const getMajor = req.body.major;
+  const getMajor = req.body.major_name;
 
   if (isEmpty(getDepartmentId)) {
     return res.json("Please Fill Department Name");
   }
 
   const queryCreateDepartmentDegree =
-    "INSERT INTO major (department_id,major, degree) VALUES ($1,$2,$3)";
+    "INSERT INTO major (department_id,major_name, degree) VALUES ($1,$2,$3)";
 
   db.query(
     queryCreateDepartmentDegree,
@@ -55,7 +55,7 @@ const editDepartmentDegree = (req, res) => {
   const getIdDepartmentDegree = req.params.id;
   const getDepartmentId = req.body.department_id;
   const getDegree = req.body.degree;
-  const getMajor = req.body.major;
+  const getMajor = req.body.major_name;
 
   console.log(getIdDepartmentDegree);
 
@@ -64,7 +64,7 @@ const editDepartmentDegree = (req, res) => {
   }
 
   const queryEditDepartmentDegree =
-    "update major set department_id = $1 ,major = $2 ,degree = $3 WHERE major_id = $4";
+    "update major set department_id = $1 ,major_name = $2 ,degree = $3 WHERE major_id = $4";
 
   db.query(
     queryEditDepartmentDegree,
