@@ -2,15 +2,18 @@ import db from "../config/db.config.js";
 import { isEmpty } from "../config/hepler.js";
 
 const getAllDepartmentDegree = (req, res) => {
-  db.query("select * from department_degree", (err, data) => {
-    res.json(data.rows);
-  });
+  db.query(
+    "select m.major_id, d.department_id, d.department_name, major_name,degree,status from major as m inner join department as d on m.department_id = d.department_id",
+    (err, data) => {
+      res.json(data.rows);
+    }
+  );
 };
 
 const getOneDepartmentDegree = (req, res) => {
   const id = req.params.id;
   const queryGetOneDepartmentDegree =
-    "Select * from department_degree where department_degree_id = $1";
+    "Select * from major where major_id = $1";
 
   db.query(queryGetOneDepartmentDegree, [id], (err, data) => {
     if (err) {
@@ -27,14 +30,14 @@ const getOneDepartmentDegree = (req, res) => {
 const createDepartmentDegree = (req, res) => {
   const getDepartmentId = req.body.department_id;
   const getDegree = req.body.degree;
-  const getMajor = req.body.major;
+  const getMajor = req.body.major_name;
 
   if (isEmpty(getDepartmentId)) {
     return res.json("Please Fill Department Name");
   }
 
   const queryCreateDepartmentDegree =
-    "INSERT INTO department_degree (department_id,major, degree) VALUES ($1,$2,$3)";
+    "INSERT INTO major (department_id,major_name, degree) VALUES ($1,$2,$3)";
 
   db.query(
     queryCreateDepartmentDegree,
@@ -52,7 +55,7 @@ const editDepartmentDegree = (req, res) => {
   const getIdDepartmentDegree = req.params.id;
   const getDepartmentId = req.body.department_id;
   const getDegree = req.body.degree;
-  const getMajor = req.body.major;
+  const getMajor = req.body.major_name;
 
   console.log(getIdDepartmentDegree);
 
@@ -61,7 +64,7 @@ const editDepartmentDegree = (req, res) => {
   }
 
   const queryEditDepartmentDegree =
-    "update department_degree set department_id = $1 ,major = $2 ,degree = $3 WHERE department_degree_id = $4";
+    "update major set department_id = $1 ,major_name = $2 ,degree = $3 WHERE major_id = $4";
 
   db.query(
     queryEditDepartmentDegree,
@@ -79,7 +82,7 @@ const deleteDepartmentDegree = (req, res) => {
   const getIdDepartmentDegree = req.params.id;
 
   db.query(
-    "Delete from department_degree where department_degree_id = $1",
+    "Delete from major where major_id = $1",
     [getIdDepartmentDegree],
     (err, data) => {
       if (err) return res.json(err);
