@@ -23,6 +23,7 @@ LEFT JOIN
   department d  ON  s.department_id = d.department_id ;
   `,
     (err, data) => {
+      console.log(data)
       res.json(data.rows);
     }
   );
@@ -91,7 +92,7 @@ const createSchedule = (req, res) => {
        university_id, batch, semester, year, term_start, term_end, department_id,  degree, shift, academic, approver,
        preparer,
        major_id)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11,$12,$13)`;
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11,$12,$13) returning schedule_id`;
 
   db.query(
     querySchedule,
@@ -111,9 +112,10 @@ const createSchedule = (req, res) => {
       major_id
     ],
     (err, data) => {
-      console.log(err,data)
+      console.log(err,)
       if (err) return res.json(err);
-      return res.status(200).json("Schedule Created!");
+      res.schedule_id = data.rows[0].schedule_id;
+      return res.status(200).json( data.rows[0]);
     }
   );
 
@@ -132,32 +134,28 @@ const createSchedule = (req, res) => {
 };
 
 const editSchedule = (req, res) => {
-  const getIdSubject = req.params.id;
-  const getSubjectName = req.body.subject_name;
-  const getSubjectCode = req.body.subject_code;
-  const getDepartmentId = 1;
+  const id = req.params.id;
+  const year = req.body.year;
+  const batch = req.body.batch;
+  const semester = req.body.semester;
+  const termStart = req.body.term_start;
+  const termEnd = req.body.term_end;
+  const description = req.body.description;
+  console.log(req.body.term_start)
 
-  if (isEmpty(getSubjectName)) {
-    return res.json("Please Fill Subject Name");
-  }
-  if (isEmpty(getSubjectCode)) {
-    return res.json("Please Fill Subject Code");
-  }
-  if (isEmpty(getDepartmentId)) {
-    return res.json("Department ID Not Found!");
-  }
 
-  const queryEditSubject =
-    "update subject set subject_name=$1, subject_code=$2, department_id=$3 WHERE subject_id = $4";
+  const queryEditSchedule =
+    "update schedule set year=$1, batch=$2, semester=$3,term_start=$4::date, term_end=$5::date, description=$6 WHERE schedule_id = $7";
 
   db.query(
-    queryEditSubject,
-    [getSubjectName, getSubjectCode, getDepartmentId, getIdSubject],
+    queryEditSchedule,
+    [year, batch, semester, termStart,termEnd,description,id],
     (err, data) => {
       if (err) {
+        console.log(err)
         return res.json(err);
       }
-      return res.status(200).json("Subject Has Been Edited!");
+      return res.status(200).json("Schedule Has Been Edited!");
     }
   );
 };
@@ -166,13 +164,22 @@ const deleteSchedule = (req, res) => {
   const getIdSubject = req.params.id;
 
   db.query(
-    "Delete from subject where subject_id = $1",
+    "delete from schedule_day where schedule_id = $1",
     [getIdSubject],
     (err, data) => {
-      if (err) return res.json(err);
-      return res.status(200).json("Subject Has Been Deleted!");
+      db.query(
+        "Delete from schedule where schedule_id = $1",
+        [getIdSubject],
+        (err, data) => {
+          console.log(err)
+          if (err) return res.json(err);
+          return res.status(200).json("schedule Has Been Deleted!");
+        }
+      );
     }
   );
+  
+
 };
 
 export {

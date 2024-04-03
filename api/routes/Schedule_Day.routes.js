@@ -11,9 +11,9 @@ import {
   const schedulesDay = (app) => {
     app.get("/api/ScheduleDays/:id", getAllScheduleDays);
     //app.get("/api/Schedule/:id", getOneSubject);
-    app.post("/api/createSchedulesDay", createScheduleDay);
-    app.put("/api/editSchedulesDay/:id", editScheduleDay);
-    app.delete("/api/deleteSchedulesDay/:id", deleteScheduleDay);
+    app.post("/api/createScheduleDay", createScheduleDay);
+    app.put("/api/editScheduleDay/:id", editScheduleDay);
+    app.delete("/api/deleteScheduleDay/:id", deleteScheduleDay);
   };
   export default schedulesDay;
   

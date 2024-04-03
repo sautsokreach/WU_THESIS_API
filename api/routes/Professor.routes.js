@@ -1,5 +1,6 @@
 import {
   getAllProfessor,
+  getApproverPreparer,
   getAvailableProfessor,
   getOneProfessor,
   createProfessor,
@@ -11,6 +12,7 @@ import {
 
 const professor = (app) => {
   app.get("/api/professors", getAllProfessor);
+  app.get("/api/getApproverPreparer", getApproverPreparer);
   app.get("/api/professor/:id", getOneProfessor);
   app.post("/api/getAvailableProfessor", getAvailableProfessor);
   app.post("/api/createProfessor", createProfessor);

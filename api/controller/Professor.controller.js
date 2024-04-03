@@ -7,6 +7,12 @@ const getAllProfessor = (req, res) => {
     res.json(data.rows);
   });
 };
+const getApproverPreparer = (req, res) => {
+  db.query("SELECT * FROM professor where note ilike '%approve%' or note ilike '%prepare%'", (err, data) => {
+    console.log(data)
+    res.json(data.rows);
+  });
+};
 
 const getOneProfessor = (req, res) => {
   const id = req.params.id;
@@ -82,9 +88,9 @@ const createProfessor = (req, res) => {
   const getFirstNameProfessor = req.body.first_name;
   const getLastNameProfessor = req.body.last_name;
   const getPhoneNumberProfessor = req.body.phone_number;
-  const getDepartmentProfessor = 1;
   const email = req.body.email;
   const degree = req.body.degree;
+  const note = req.body.note;
 
   if (isEmpty(getFirstNameProfessor)) {
     return res.json("Please Fill Professor First Name");
@@ -92,25 +98,22 @@ const createProfessor = (req, res) => {
   if (isEmpty(getLastNameProfessor)) {
     return res.json("Please Fill Professor Last Name");
   }
-  if (isEmpty(getDepartmentProfessor)) {
-    return res.json("Please Input Professor Department");
-  }
   if (isEmpty(getPhoneNumberProfessor)) {
     return res.json("Please Input Professor Phone Number");
   }
 
   const queryCreateProfessor =
-    "INSERT INTO professor (first_name, last_name, department_id, phone_number,email,degree) VALUES ($1,$2,$3,$4,$5,$6)";
+    "INSERT INTO professor (first_name, last_name, phone_number,email,degree,note) VALUES ($1,$2,$3,$4,$5,$6)";
 
   db.query(
     queryCreateProfessor,
     [
       getFirstNameProfessor,
       getLastNameProfessor,
-      getDepartmentProfessor,
       getPhoneNumberProfessor,
       email,
       degree,
+      note
     ],
     (err, data) => {
       if (err) {
@@ -144,36 +147,33 @@ const editProfessor = (req, res) => {
   const getFirstNameProfessor = req.body.first_name;
   const getLastNameProfessor = req.body.last_name;
   const getPhoneNumberProfessor = req.body.phone_number;
-  const getDepartmentProfessor = 1;
   const email = req.body.email;
   const degree = req.body.degree;
-  getDepartmentProfessor;
+  const note = req.body.note;
   if (isEmpty(getFirstNameProfessor)) {
     return res.json("Please Fill Professor First Name");
   }
   if (isEmpty(getLastNameProfessor)) {
     return res.json("Please Fill Professor Last Name");
   }
-  if (isEmpty(getDepartmentProfessor)) {
-    return res.json("Please Input Professor Department");
-  }
   if (isEmpty(getPhoneNumberProfessor)) {
-    return res.json("Please Input Professor Phone Number");
+    return res.json("Please Input Professor Phone Number");8
   }
 
   const queryEditUniversity =
-    "update professor set first_name=$1, last_name=$2, department_id=$3, phone_number=$4,email=$5, degree=$6 WHERE professor_id = $7";
+    "update professor set first_name=$1, last_name=$2, phone_number=$3,email=$4, degree=$5 , note = $6 WHERE professor_id = $7";
 
   db.query(
     queryEditUniversity,
     [
       getFirstNameProfessor,
       getLastNameProfessor,
-      getDepartmentProfessor,
       getPhoneNumberProfessor,
       email,
       degree,
+      note,
       getIdProfessor,
+      
     ],
     (err, data) => {
       if (err) {
@@ -185,6 +185,7 @@ const editProfessor = (req, res) => {
 };
 export {
   getAllProfessor,
+  getApproverPreparer,
   getAvailableProfessor,
   getOneProfessor,
   createProfessor,
