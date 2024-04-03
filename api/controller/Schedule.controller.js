@@ -41,17 +41,20 @@ const getOneSchedule = (req, res) => {
 };
 
 const createSchedule = (req, res) => {
-  const universityId = req.body.university_id;
+  const universityId = req.body.university;
   const batch = req.body.batch;
   const semester = req.body.semester;
   const year = req.body.year;
-  const termStart = req.body.term_start;
-  const termEnd = req.body.term_end;
-  const departmentId = req.body.department_id;
-  const degree = req.body.degree;
+  const termStart = req.body.startTerm;
+  const termEnd = req.body.endTerm;
+  const departmentId = req.body.department;
+  const degree = req.body.major_set;
   const shift = req.body.shift;
-  const description = req.body.description;
+  //const description = req.body.description;
   const academic = req.body.academic;
+  const approver = req.body.approver;
+  const preparer = req.body.preparer;
+  const major_id = req.body.major;
 
   if (isEmpty(universityId)) {
     return res.json("Can't Get University");
@@ -85,8 +88,10 @@ const createSchedule = (req, res) => {
   }
 
   const querySchedule = `Insert into schedule (
-       university_id, batch, semester, year, term_start, term_end, department_id,  degree, shift, academic)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
+       university_id, batch, semester, year, term_start, term_end, department_id,  degree, shift, academic, approver,
+       preparer,
+       major_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11,$12,$13)`;
 
   db.query(
     querySchedule,
@@ -101,8 +106,12 @@ const createSchedule = (req, res) => {
       degree,
       shift,
       academic,
+      approver,
+      preparer,
+      major_id
     ],
     (err, data) => {
+      console.log(err,data)
       if (err) return res.json(err);
       return res.status(200).json("Schedule Created!");
     }
