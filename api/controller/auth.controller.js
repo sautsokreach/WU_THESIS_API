@@ -48,8 +48,9 @@ const login = async (req, res) => {
   if (rows.length === 0) return res.status(404).json("User Not Found!");
 
   // Verify Password User
-  const comparePassword = bcrypt.compare(passwordUser, rows[0].password);
+  const comparePassword = await bcrypt.compare(passwordUser, rows[0].password);
   if (!comparePassword) return res.status(400).json("Wrong Password!");
+ 
 
   // Create Cookie
   const token = Jwt.sign({ id: rows[0].id }, "jwtkey");
