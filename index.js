@@ -17,7 +17,7 @@ import ScheduleDay from "./api/routes/Schedule_Day.routes.js";
 
 var corsOptions = {
   credentials: true,
-  origin: "http://localhost:3000",
+  origin: "http://localhost:3000,https://wu-thesis-ten.vercel.app/",
 };
 
 const app = express();
