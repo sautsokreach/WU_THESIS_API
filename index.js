@@ -8,7 +8,6 @@ import departments from "./api/routes/Department.routes.js";
 import university from "./api/routes/University.routes.js";
 import professor from "./api/routes/Professor.routes.js";
 import subject from "./api/routes/Subject.routes.js";
-import classes from "./api/routes/Class.routes.js";
 import professor_schedule from "./api/routes/Professor_Schedule.routes.js";
 import departmentDegree from "./api/routes/Department_Degree.routes.js";
 import Auth from "./api/routes/auth.routes.js";
@@ -28,7 +27,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //Use Routes
 rooms(app);
-classes(app);
 departments(app);
 university(app);
 professor(app);
