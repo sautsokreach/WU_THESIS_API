@@ -2,7 +2,7 @@ import db from "../config/db.config.js";
 import { isEmpty } from "../config/hepler.js";
 
 const getAllSubject = (req, res) => {
-  db.query("SELECT * FROM subject order by subject_id asc", (err, data) => {
+  db.query("SELECT * FROM subject order by subject_id asc  ", (err, data) => {
     res.json(data.rows);
   });
 };
