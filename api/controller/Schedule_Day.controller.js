@@ -20,31 +20,39 @@ const getOneScheduleDay = (req, res) => {
 };
 
 const createScheduleDay = (req, res) => {
-  const getSubjectName = req.body.subject_name;
-  const getSubjectCode = req.body.subject_code;
-  const getDepartmentId = 1;
+  const getScheduleId = req.body.schedule_id;
+  const getSubjectId = req.body.subject_id;
+  const getProfessorId = req.body.professor_id;
+  const getRoomId = req.body.room_id;
+  const getWeekDay = req.body.weekDay;
 
-  if (isEmpty(getSubjectName)) {
-    return res.json("Please Fill Subject Name");
+  if (isEmpty(getScheduleId)) {
+    return res.json("Please Fill getSubjectId");
   }
-  if (isEmpty(getSubjectCode)) {
-    return res.json("Please Fill Subject Code");
+  if (isEmpty(getSubjectId)) {
+    return res.json("Please Fill getSubjectId");
   }
-  if (isEmpty(getDepartmentId)) {
-    return res.json("Department ID Not Found!");
+  if (isEmpty(getProfessorId)) {
+    return res.json("Please Fill getProfessorId");
+  }
+  if (isEmpty(getRoomId)) {
+    return res.json("Department getRoomId");
+  }
+  if (isEmpty(getWeekDay)) {
+    return res.json("Department getWeekDay");
   }
 
   const queryCreateRoom =
-    "INSERT INTO subject ( subject_name, subject_code, department_id) VALUES ($1,$2,$3)";
+    "INSERT INTO schedule_day ( schedule_id,subject_id, professor_id, room_id,weekDay) VALUES ($1,$2,$3,$4,$5)";
 
   db.query(
     queryCreateRoom,
-    [getSubjectName, getSubjectCode, getDepartmentId],
+    [getScheduleId,getSubjectId, getProfessorId, getRoomId,getWeekDay],
     (err, data) => {
       if (err) {
         return res.json(err);
       }
-      return res.status(200).json("Subject Has Been Created!");
+      return res.status(200).json("Schedule Day Has Been Created!");
     }
   );
 };
