@@ -41,7 +41,7 @@ Schedule(app);
 ScheduleDay(app);
 // Server Port
 
-const port = 8080;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log("Server run on port : localhost:" + port);
 });
