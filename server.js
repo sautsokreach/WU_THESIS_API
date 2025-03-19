@@ -14,10 +14,14 @@ import Auth from "./api/routes/auth.routes.js";
 import User from "./api/routes/UserLogin.routes.js";
 import Schedule from "./api/routes/Schedule.routes.js";
 import ScheduleDay from "./api/routes/Schedule_Day.routes.js";
+import Test from "./api/routes/Test.routes.js";
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
+
 
 var corsOptions = {
   credentials: true,
-  origin: ["http://localhost:3000", "https://wu-thesis-ten.vercel.app"]
+  origin: ["http://localhost:3000", "https://wu-thesis-ten.vercel.app","https://va.webill365.com","https://test-va.webill365.com"]
 };
 
 const app = express();
@@ -26,6 +30,7 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 
 //Use Routes
 rooms(app);
@@ -39,7 +44,29 @@ Auth(app);
 User(app);
 Schedule(app);
 ScheduleDay(app);
+Test(app);
 // Server Port
+
+// Swagger configuration
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: "3.0.0",  // 🔥 Change from "2.0" to "3.0.0"
+    info: {
+      title: "My API",
+      version: "1.0.0",
+      description: "A simple Express API",
+    },
+  },
+  apis: ['./api/routes/*.js'],    // Path to the files where your API routes are defined (use glob pattern)
+};
+
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// (Optional) Serve raw Swagger JSON (if needed)
+app.get("/swagger.json", (req, res) => {
+  res.json(swaggerSpec);
+});
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
