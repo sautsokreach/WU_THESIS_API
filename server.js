@@ -56,6 +56,19 @@ const swaggerOptions = {
       version: "1.0.0",
       description: "A simple Express API",
     },
+    components: {
+      securitySchemes: {
+        basicAuth: {
+          type: 'http',
+          scheme: 'basic', // Basic authentication scheme
+        },
+      },
+    },
+    security: [
+      {
+        basicAuth: [], // This applies the basicAuth to the routes
+      },
+    ]
   },
   apis: ['./api/routes/*.js'],    // Path to the files where your API routes are defined (use glob pattern)
 };

@@ -2,7 +2,7 @@ import {
   getAllTransaction,
   createTransaction,
 } from "../controller/Test.controller.js";
-
+import basicAuth from 'express-basic-auth';
 const transaction = (app) => {
   /**
    @swagger
@@ -14,7 +14,11 @@ const transaction = (app) => {
    *       200:
    *         description: A list of transactions
    */
-  app.get("/api/PaymentDeposit", getAllTransaction);
+  app.get("/api/PaymentDeposit", basicAuth({
+    users: { '012253063': '012253063' },
+    challenge: true,
+    realm: 'Restricted Area',
+  }), getAllTransaction);
 
   /**
    * @swagger
@@ -82,7 +86,12 @@ const transaction = (app) => {
    *       201:
    *         description: Transaction created successfully
    */
-  app.post("/api/PaymentDeposit", createTransaction);
+  app.post("/api/PaymentDeposit",
+  basicAuth({
+    users: { '012253063': '012253063' },
+    challenge: true,
+    realm: 'Restricted Area',
+  }), createTransaction);
 };
 
 export default transaction;
