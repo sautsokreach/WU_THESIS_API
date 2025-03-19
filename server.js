@@ -17,6 +17,8 @@ import ScheduleDay from "./api/routes/Schedule_Day.routes.js";
 import Test from "./api/routes/Test.routes.js";
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
+import db from "./api/config/db.config.js";
+import cron from 'node-cron';
 
 
 var corsOptions = {
@@ -31,6 +33,18 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const keepDatabaseAlive = () => {
+  db.query('SELECT NOW()', (err, res) => {
+    if (err) {
+      console.error('Error keeping DB alive:', err);
+    } else {
+      console.log('Database is alive:', res.rows);
+    }
+  });
+};
+cron.schedule('*/5 * * * *', () => {
+  keepDatabaseAlive(); // Ping DB every minute
+});
 
 //Use Routes
 rooms(app);
