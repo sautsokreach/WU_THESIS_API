@@ -19,6 +19,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import db from "./api/config/db.config.js";
 import cron from 'node-cron';
+import winston from 'winston';
 
 
 var corsOptions = {
@@ -32,6 +33,29 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+  logger.info({
+    message: "Incoming Request",
+    method: req.method,
+    url: req.originalUrl,
+    body: req.body,  // Logs the request body
+    query: req.query, // Logs query params (optional)
+    headers: req.headers, // Logs headers (optional)
+  });
+  next();
+});
+
+const logger = winston.createLogger({
+  level: 'info',  // Default log level
+  format: winston.format.combine(
+    winston.format.timestamp(), // Add timestamp to log
+    winston.format.json()       // Format logs as JSON
+  ),
+  transports: [
+    new winston.transports.Console(), // Output logs to console
+    new winston.transports.File({ filename: 'logs/app.log' }) // Output logs to a file
+  ],
+});
 
 const keepDatabaseAlive = () => {
   db.query('SELECT NOW()', (err, res) => {
