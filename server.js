@@ -142,13 +142,13 @@ app.get("/swagger.json", (req, res) => {
 //     await client.sendMessage("me", { message: client.session.save() }); // Send session to yourself
 // })();
 
-const SESSION_STRING = ``
+// const SESSION_STRING = ``
 
-const client = new TelegramClient(new StringSession(SESSION_STRING), APP_ID, API_HASH, {
-  connectionRetries: 5,
-});
+// const client = new TelegramClient(new StringSession(SESSION_STRING), APP_ID, API_HASH, {
+//   connectionRetries: 5,
+// });
 
-await client.start();
+// await client.start();
 
 // // Your bot or script logic goes here
 // await client.sendMessage("me", { message: "Hello from your bot!" });
