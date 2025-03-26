@@ -20,7 +20,10 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import db from "./api/config/db.config.js";
 import cron from 'node-cron';
 import winston from 'winston';
-
+import { StringSession } from "telegram/sessions/index.js";
+import  {TelegramClient}  from "telegram";
+import input from "input";
+import { Api } from "telegram/tl/index.js";
 
 var corsOptions = {
   credentials: true,
@@ -118,6 +121,76 @@ app.get("/swagger.json", (req, res) => {
   res.json(swaggerSpec);
 });
 
+
+ const APP_ID = 25415215;
+ const API_HASH = "3f45b77345adbf975c91f2fe8175c174";
+
+// const session = new StringSession(""); // Empty string for a new session
+// const client = new TelegramClient(session, APP_ID, API_HASH, {
+//     connectionRetries: 5,
+// });
+
+// (async () => {
+//     await client.start({
+//         phoneNumber: async () => await input.text("Enter phone number: "),
+//         password: async () => await input.text("Enter password (if enabled): "),
+//         phoneCode: async () => await input.text("Enter the code you received: "),
+//         onError: (err) => console.log(err),
+//     });
+
+//     console.log("Session string:", client.session.save());
+//     await client.sendMessage("me", { message: client.session.save() }); // Send session to yourself
+// })();
+
+const SESSION_STRING = ``
+
+const client = new TelegramClient(new StringSession(SESSION_STRING), APP_ID, API_HASH, {
+  connectionRetries: 5,
+});
+
+await client.start();
+
+// // Your bot or script logic goes here
+// await client.sendMessage("me", { message: "Hello from your bot!" });
+
+// console.log("Bot is running...");
+// Listen for new messages
+// client.addEventHandler(async (event) => {
+//   console.log('No New Message:',event.className);
+//   // Check if the event is a new message
+//   if ( event.className === 'UpdateShortMessage' || event.className === 'UpdateNewMessage') {
+//     const message = event.message;
+    
+//     try {
+//       // Extract message details
+//       const messageDetails = {
+//         id: message.id,
+//         peerId: message.peerId,
+//         senderId: message.senderId,
+//         text: message.message,
+//         timestamp: message.date,
+//         isOutgoing: message.out,
+//         media: message.media ? true : false
+//       };
+
+//       console.log('New Message:', message);
+//       try {
+//         await client.sendMessage("-1002699373762", { message });
+//         console.log('Message sent successfully');
+//       } catch (error) {
+//         console.error('Error sending message:', error);
+//       }
+
+//       // Add your custom logic here
+//       // For example, you might want to:
+//       // - Store the message
+//       // - Trigger specific actions based on content
+//       // - Send automated responses
+//     } catch (error) {
+//       console.error('Error processing message:', error);
+//     }
+//   }
+// });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
