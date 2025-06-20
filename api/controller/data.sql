@@ -82,7 +82,7 @@ CREATE TABLE professor_schedule (
   subject_id INT REFERENCES subject(subject_id),
   semester semester,
   batch INT NOT NULL,
-  year VARCHAR(10),
+  year VARCHAR(20),
   schedule JSONB  -- To store complex schedule data like {weekday:{shift:available}}
 );
 
