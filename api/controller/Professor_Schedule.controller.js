@@ -25,6 +25,36 @@ const getOneProfessor_Schedule = (req, res) => {
 };
 
 const createProfessor_Schedule = (req, res) => {
+  const fix = {
+  "morning": {
+    "monday": true,
+    "tuesday": true,
+    "wednesday": true,
+    "thursday": true,
+    "friday": true,
+    "saturday": true,
+    "sunday": true
+  },
+  "afternoon": {
+    "monday": true,
+    "tuesday": true,
+    "wednesday": true,
+    "thursday": true,
+    "friday": true,
+    "saturday": true,
+    "sunday": true
+  },
+  "evening": {
+    "monday": true,
+    "tuesday": true,
+    "wednesday": true,
+    "thursday": true,
+    "friday": true,
+    "saturday": true,
+    "sunday": true
+  }
+}
+
   const getProfessorID = req.body.professor_id;
   const getSubjectId = req.body.subject_id;
   const getSemester = req.body.semester;
@@ -48,11 +78,11 @@ const createProfessor_Schedule = (req, res) => {
   }
 
   const queryCreateProfessor =
-    "INSERT INTO professor_schedule (professor_id, subject_id, semester, batch,year) VALUES ($1,$2,$3,$4,$5)";
+    "INSERT INTO professor_schedule (professor_id, subject_id, semester, batch,year,schedule) VALUES ($1,$2,$3,$4,$5)";
 
   db.query(
     queryCreateProfessor,
-    [getProfessorID, getSubjectId, getSemester, getBatch, getYear],
+    [getProfessorID, getSubjectId, getSemester, getBatch, getYear,fix],
     (err, data) => {
       if (err) {
         return res.json(err);
