@@ -4,14 +4,12 @@ const { Pool } = pg;
 
 //aws Server
 const db = new Pool({
-  user: "sautsokreach",
-  host: "ep-rough-rice-922718.ap-southeast-1.aws.neon.tech",
-  database: "university_schedule",
-  password: "lP2dXvp6Dbqi",
+  user: "admin",
+  host: "3.107.72.161",
+  database: "university",
+  password: "ASDasd123!@#",
   port: 5432,
-  ssl: {
-    rejectUnauthorized: false, // You may need to set this to true in a production environment with a valid certificate
-  },
+  ssl: false,
 });
 
 db.connect((err) => {

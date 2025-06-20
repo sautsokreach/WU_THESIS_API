@@ -60,19 +60,6 @@ const logger = winston.createLogger({
   ],
 });
 
-const keepDatabaseAlive = () => {
-  db.query('SELECT NOW()', (err, res) => {
-    if (err) {
-      console.error('Error keeping DB alive:', err);
-    } else {
-      console.log('Database is alive:', res.rows);
-    }
-  });
-};
-cron.schedule('*/5 * * * *', () => {
-  keepDatabaseAlive(); // Ping DB every minute
-});
-
 //Use Routes
 rooms(app);
 departments(app);
