@@ -25,13 +25,13 @@ import  {TelegramClient}  from "telegram";
 import input from "input";
 import { Api } from "telegram/tl/index.js";
 
+var corsOptions = {
+  credentials: true,
+  origin: 'https://wu-thesis-ten.vercel.app'
+};
 
 const app = express();
 
-app.use(cors({
-  origin: 'https://wu-thesis-ten.vercel.app',
-  credentials: true   // Only if you use cookies or Authorization headers
-}));
 // Middleware
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
