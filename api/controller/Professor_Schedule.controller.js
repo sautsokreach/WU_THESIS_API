@@ -78,7 +78,7 @@ const createProfessor_Schedule = (req, res) => {
   }
 
   const queryCreateProfessor =
-    "INSERT INTO professor_schedule (professor_id, subject_id, semester, batch,year,schedule) VALUES ($1,$2,$3,$4,$5)";
+    "INSERT INTO professor_schedule (professor_id, subject_id, semester, batch,year,schedule) VALUES ($1,$2,$3,$4,$5,$6)";
 
   db.query(
     queryCreateProfessor,
