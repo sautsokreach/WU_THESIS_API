@@ -27,7 +27,7 @@ import { Api } from "telegram/tl/index.js";
 
 var corsOptions = {
   credentials: true,
-  origin: ["http://localhost:3000", "https://wu-thesis-ten.vercel.app","https://va.webill365.com","https://test-va.webill365.com"]
+  origin: 'https://wu-thesis-ten.vercel.app'
 };
 
 const app = express();
