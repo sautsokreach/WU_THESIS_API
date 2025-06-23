@@ -23,7 +23,7 @@ LEFT JOIN
   department d  ON  s.department_id = d.department_id ;
   `,
     (err, data) => {
-      console.log(data)
+      console.log(err)
       res.json(data.rows);
     }
   );

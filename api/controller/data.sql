@@ -21,12 +21,17 @@ CREATE TABLE schedule (
   description VARCHAR(50) NOT NULL,
   year gradeYear,  -- custom type?
   university_id INT REFERENCES university(university_id),
+  department_id INT REFERENCES department(department_id),
+  degree degree,
   batch INT NOT NULL,
   semester semester,  -- custom type?
   term_start DATE,
   shift shift,
   term_end DATE,
-  academic VARCHAR(50) NOT NULL
+  academic VARCHAR(50) NOT NULL,
+  approver INT REFERENCES professor(professor_id),
+  preparer INT REFERENCES professor(professor_id),
+    major_id INT REFERENCES major(major_id),
 );
 
 
