@@ -24,9 +24,11 @@ CREATE TABLE schedule (
   batch INT NOT NULL,
   semester semester,  -- custom type?
   term_start DATE,
+  shift shift,
   term_end DATE,
   academic VARCHAR(50) NOT NULL
 );
+
 
 CREATE TABLE department (
   department_id SERIAL PRIMARY KEY,
