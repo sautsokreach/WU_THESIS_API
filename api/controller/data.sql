@@ -68,14 +68,6 @@ CREATE TABLE professor (
   note VARCHAR(255)
 );
 
-
-CREATE TABLE class (
-  class_id SERIAL PRIMARY KEY,
-  subject_id INT REFERENCES subject(subject_id),
-  professor_id INT REFERENCES professor(professor_id),
-  room_id INT REFERENCES room(room_id)
-);
-
 CREATE TABLE professor_schedule (
   professor_schedule_id SERIAL PRIMARY KEY,
   professor_id INT REFERENCES professor(professor_id),
@@ -96,10 +88,10 @@ CREATE TABLE schedule_detail (
   modify_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
 CREATE TABLE schedule_day (
   schedule_day_id SERIAL PRIMARY KEY,
   schedule_id INT REFERENCES schedule(schedule_id),
+  room_id INT REFERENCES room(room_id),
   schedule_detail_id INT REFERENCES schedule_detail(schedule_detail_id),
   subject_id INT REFERENCES subject(subject_id),
   professor_id INT REFERENCES professor(professor_id),
