@@ -104,6 +104,6 @@ CREATE TABLE schedule_day (
   subject_id INT REFERENCES subject(subject_id),
   professor_id INT REFERENCES professor(professor_id),
   class_id INT REFERENCES class(class_id),
-  week_day weekDay,
+  weekday weekday,
   studyTime studyTime
 );

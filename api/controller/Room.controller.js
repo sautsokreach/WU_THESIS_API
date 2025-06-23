@@ -105,7 +105,7 @@ const getAvailableRoom = (req, res) => {
 
   const queryAvailableRoom = `SELECT * FROM room r where not exists (select 1 from schedule_day sd 
       join schedule s on s.schedule_id = sd.schedule_id 
-      where sd.weekday = $1 and s.shift = $2 and CAST($3 AS DATE)
+      where sd.weekDay = $1 and s.shift = $2 and CAST($3 AS DATE)
       < term_end   and sd.room_id = r.room_id  ) and r.status = 'available'`;
 
   db.query(queryAvailableRoom, [weekDay, shift, date], (err, data) => {
