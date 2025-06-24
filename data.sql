@@ -1,3 +1,12 @@
+CREATE TYPE semester AS ENUM ('1', '2');
+CREATE TYPE weekDay AS ENUM ('monday', 'tuesday','wednesday','thursday','friday','saturday','sunday');
+CREATE TYPE degree AS ENUM ('associate', 'bachelor','master','PhD');
+CREATE TYPE shift AS ENUM ('morning', 'afternoon','evening','weekend');
+CREATE TYPE gradeYear AS ENUM ('1', '2','3','4','5');
+CREATE TYPE status AS ENUM ('available', 'unavailable','delete');
+CREATE TYPE studyTime AS ENUM ('8:00-9:30', '9:35-11:00', '14:00-15:30','15:35-17:00', '17:30-19:00','19:05-20:30');
+
+
 CREATE TABLE user_login (
   user_id SERIAL PRIMARY KEY,
   username VARCHAR(50) NOT NULL,
@@ -82,7 +91,7 @@ CREATE TABLE professor_schedule (
   semester semester,
   batch INT NOT NULL,
   year VARCHAR(20),
-  schedule JSONB  -- To store complex schedule data like {weekday:{shift:available}}
+  schedule JSONB  
 );
 
 
