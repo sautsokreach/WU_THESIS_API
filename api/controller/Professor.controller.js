@@ -39,7 +39,7 @@ const getAvailableProfessor = (req, res) => {
   const batch = req.body.batch;
   const semester = req.body.semester;
   const startTerm = req.body.startTerm;
-  const departmentId = req.body.department_id;
+  const departmentId = req.body.department;
   const queryGetOneProfessor = `select * from professor_schedule ps left join professor p on p.professor_id = ps.professor_id 
     where subject_id= $1
     and schedule->$2->$3 ='true'
