@@ -39,11 +39,13 @@ const getAvailableProfessor = (req, res) => {
   const batch = req.body.batch;
   const semester = req.body.semester;
   const startTerm = req.body.startTerm;
+  const departmentId = req.body.department_id;
   const queryGetOneProfessor = `select * from professor_schedule ps left join professor p on p.professor_id = ps.professor_id 
     where subject_id= $1
     and schedule->$2->$3 ='true'
     and batch = $4
     and semester = $5
+    and deparment_id = $9
     and not exists (select 1 from schedule_day sd
     join schedule s on s.schedule_id = sd.schedule_id where sd.weekday = $6 and s.shift =$7
     and CAST($8 AS DATE) between term_start and term_end
@@ -62,6 +64,7 @@ const getAvailableProfessor = (req, res) => {
           weekDay,
           shift,
           startTerm,
+          departmentId
         ][index - 1]
       }'`; // Replace parameter with corresponding value
     }
