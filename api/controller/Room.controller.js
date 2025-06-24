@@ -105,9 +105,7 @@ console.log('testing0000')
 
   const queryAvailableRoom = `SELECT * FROM room r where not exists (select 1 from schedule_day sd 
       join schedule s on s.schedule_id = sd.schedule_id 
-      join schedule_detail s_de on s_de.schedule_detail_id = sd.schedule_detail_id 
-      join class s_de on s_de.schedule_detail_id = sd.schedule_detail_id 
-      where sd.weekDay = $1 and s_de.shift = $2 and CAST($3 AS DATE)
+      where sd.weekDay = $1 and s.shift = $2 and CAST($3 AS DATE)
       < term_end   and sd.room_id = r.room_id  ) and r.status = 'available'`;
 
   db.query(queryAvailableRoom, [weekDay, shift, date], (err, data) => {

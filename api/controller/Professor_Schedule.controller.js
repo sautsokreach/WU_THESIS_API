@@ -60,6 +60,7 @@ const createProfessor_Schedule = (req, res) => {
   const getSemester = req.body.semester;
   const getBatch = req.body.batch;
   const getYear = req.body.year;
+  const getDeparmentID = req.body.department_id;
 
   if (isEmpty(getProfessorID)) {
     return res.json("Please Fill Professor Name");
@@ -76,13 +77,16 @@ const createProfessor_Schedule = (req, res) => {
   if (isEmpty(getYear)) {
     return res.json("Please Input Year");
   }
+  if (isEmpty(getDeparmentID)) {
+    return res.json("Please Input Major");
+  }
 
   const queryCreateProfessor =
-    "INSERT INTO professor_schedule (professor_id, subject_id, semester, batch,year,schedule) VALUES ($1,$2,$3,$4,$5,$6)";
+    "INSERT INTO professor_schedule (professor_id, subject_id, semester, batch,year,schedule,department_id) VALUES ($1,$2,$3,$4,$5,$6,$7)";
 
   db.query(
     queryCreateProfessor,
-    [getProfessorID, getSubjectId, getSemester, getBatch, getYear,fix],
+    [getProfessorID, getSubjectId, getSemester, getBatch, getYear,fix,getDeparmentID],
     (err, data) => {
       if (err) {
         return res.json(err);
@@ -117,6 +121,7 @@ const editProfessor_Schedule = (req, res) => {
   const getSemester = req.body.semester;
   const getBatch = req.body.batch;
   const getYear = req.body.year;
+  const getDeparmentID = req.body.department_id;
 
   if (isEmpty(getProfessorID)) {
     return res.json("Please Fill Professor Name");
@@ -135,7 +140,7 @@ const editProfessor_Schedule = (req, res) => {
   }
 
   const queryEditUniversity =
-    "update professor_schedule set professor_id=$1, subject_id=$2, semester=$3, batch=$4,year=$5 WHERE professor_schedule_id = $6";
+    "update professor_schedule set professor_id=$1, subject_id=$2, semester=$3, batch=$4,year=$5,department_id = $6 WHERE professor_schedule_id = $7";
   db.query(
     queryEditUniversity,
     [
@@ -144,7 +149,8 @@ const editProfessor_Schedule = (req, res) => {
       getSemester,
       getBatch,
       getYear,
-      getProfessorScheduleID,
+      getDeparmentID,
+      getProfessorScheduleID
     ],
     (err, data) => {
       if (err) {

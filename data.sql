@@ -12,6 +12,9 @@ CREATE TABLE user_login (
   username VARCHAR(50) NOT NULL,
   password VARCHAR(255) NOT NULL,
   email VARCHAR(100) UNIQUE NOT NULL,
+  title VARCHAR(100)  NULL,
+  place VARCHAR(100)  NULL,
+  about VARCHAR(100)  NULL,
   reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -88,6 +91,7 @@ CREATE TABLE professor_schedule (
   professor_schedule_id SERIAL PRIMARY KEY,
   professor_id INT REFERENCES professor(professor_id),
   subject_id INT REFERENCES subject(subject_id),
+  department_id INT REFERENCES department(department_id),
   semester semester,
   batch INT NOT NULL,
   year VARCHAR(20),
@@ -95,23 +99,12 @@ CREATE TABLE professor_schedule (
 );
 
 
-CREATE TABLE schedule_detail (
-  schedule_detail_id SERIAL PRIMARY KEY,
-  schedule_id INT REFERENCES schedule(schedule_id),
-  degree degree,
-  department_id INT REFERENCES department(department_id),
-  shift shift,
-  modify_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE schedule_day (
   schedule_day_id SERIAL PRIMARY KEY,
   schedule_id INT REFERENCES schedule(schedule_id),
   room_id INT REFERENCES room(room_id),
-  schedule_detail_id INT REFERENCES schedule_detail(schedule_detail_id),
   subject_id INT REFERENCES subject(subject_id),
   professor_id INT REFERENCES professor(professor_id),
-  class_id INT REFERENCES class(class_id),
   weekday weekday,
   studyTime studyTime
 );

@@ -90,7 +90,10 @@ const editUser = (req, res) => {
     queryUser,
     [userName, email, title, place, about, userId],
     (err, data) => {
-      if (err) res.status(400).json(err);
+      if (err){
+        console.log(err)
+          return res.status(400).json(err);
+      } 
       return res.status(200).json("Updated User!");
     }
   );
