@@ -45,7 +45,7 @@ const getAvailableProfessor = (req, res) => {
     and schedule->$2->$3 ='true'
     and batch = $4
     and semester = $5
-    and ps.deparment_id = $9
+    and ps.department_id = $9
     and not exists (select 1 from schedule_day sd
     join schedule s on s.schedule_id = sd.schedule_id where sd.weekday = $6 and s.shift =$7
     and CAST($8 AS DATE) between term_start and term_end
@@ -77,9 +77,10 @@ const getAvailableProfessor = (req, res) => {
 
   db.query(
     queryGetOneProfessor,
-    [subject_id, shift, weekDay, batch, semester, weekDay, shift, startTerm],
+    [subject_id, shift, weekDay, batch, semester, weekDay, shift, startTerm,departmentId],
     (err, data) => {
       if (err) {
+        console.log(err)
         return res.json(err);
       }
       return res.json(data.rows);
