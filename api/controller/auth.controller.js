@@ -83,24 +83,6 @@ const editUser = (req, res) => {
   // console.log(userId, userName, email, title, place, about);
 
   if (isEmpty(userName)) return res.json("Please Input Name");
-about
-: 
-"3"
-email
-: 
-"admin@gmail.com"
-place
-: 
-"2"
-title
-: 
-"1"
-user_id
-: 
-1
-username
-: 
-"admin1"
   const queryUser =
     "update user_login set username =$1, email=$2, title =$3, place =$4, about=$5  where user_id = $6";
   db.query(
