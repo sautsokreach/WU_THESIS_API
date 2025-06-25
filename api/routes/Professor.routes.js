@@ -7,8 +7,7 @@ import {
   editProfessor,
   deleteProfessor,
 } from "../controller/Professor.controller.js";
-
-//const { validateToken } = require("../controller/auth.constroller");
+import { validateToken } from "../controller/auth.controller.js";
 
 const professor = (app) => {
   app.get("/api/professors", getAllProfessor);

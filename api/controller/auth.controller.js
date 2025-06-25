@@ -1,7 +1,32 @@
 import db from "../config/db.config.js";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
-import { isEmpty } from "../config/hepler.js";
+import { isEmpty,config } from "../config/hepler.js";
+
+const validateToken = (req,res,next) => {
+    var AuthHeader = req.headers["authorization"]
+    if(AuthHeader){
+        AuthHeader = AuthHeader.split(" ");
+        var token = AuthHeader[1]
+        console.log(token)
+        Jwt.verify(token,config.local_token,(err,obj_info)=>{
+            if(!err){
+                req.user = obj_info.user
+                next();
+            }else{
+                res.json({
+                    error:true,
+                    message : "Invalid token"
+                })
+            }
+        })
+    }else{
+        res.json({
+            error:true,
+            message : "Please fill in token"
+        })
+    }
+}
 
 const register = async (req, res) => {
   const userName = req.body.name;
@@ -53,8 +78,9 @@ const login = async (req, res) => {
  
 
   // Create Cookie
-  const token = Jwt.sign({ id: rows[0].id }, "jwtkey");
+  const token = Jwt.sign({ id: rows[0].id }, config.local_token);
   const { password, reg_date, ...other } = rows[0];
+  other.token = token;
 
   // Send Cookie to Client
   //console.log(token);
@@ -98,4 +124,4 @@ const editUser = (req, res) => {
   );
 };
 
-export { login, logout, register, editUser };
+export { login, logout, register, editUser ,validateToken};
