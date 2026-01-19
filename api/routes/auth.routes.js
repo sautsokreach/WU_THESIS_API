@@ -1,14 +1,17 @@
+import {
+  login,
+  logout,
+  register,
+  editUser,
+} from "../controller/auth.controller.js";
 
+//const { validateToken } = require("../controller/auth.constroller");
 
+const Auth = (app) => {
+  app.post("/api/register", register);
+  app.post("/api/login", login);
+  app.post("/api/logout", logout);
+  app.put("/api/editUser/:id", editUser);
+};
 
-const {
-    createUser,
-    login,
-    changeStatusUser
-} = require("../controller/auth.constroller")
-const auth = (app) => {
-    app.post("/api/auth/createUser",createUser)
-    app.post("/api/auth/login",login)
-    app.post("/api/auth/changeStatusUser",changeStatusUser)
-} 
-module.exports = auth;
+export default Auth;

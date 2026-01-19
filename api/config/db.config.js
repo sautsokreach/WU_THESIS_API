@@ -1,40 +1,22 @@
-const { Pool }  = require("pg");
+import pg from "pg";
 
-// production database nodejs course j2
-// const db = mysql.createConnection({
-//     host : "byg0tg9umzt3zdxevlmj-mysql.services.clever-cloud.com",
-//     database : "byg0tg9umzt3zdxevlmj",
-//     user : "urnz8r2soednltnv",
-//     password : "GbbwveSR33Gl97WMcq7j"
-// })
+const { Pool } = pg;
 
-// production database demo_dbg2
-// const db = mysql.createConnection({
-//     host : "blrxi9uq7wz38fcuiboy-mysql.services.clever-cloud.com",
-//     database : "blrxi9uq7wz38fcuiboy",
-//     user : "udv4hrqsafdw8lsa",
-//     password : "oPDwjdOTgILh9Si5mR5b"
-// })
-
-//aws server
-
+//aws Server
 const db = new Pool({
-    user: 'sautsokreach',
-    host: 'ep-rough-rice-922718.ap-southeast-1.aws.neon.tech',
-    database: 'university_schedule',
-    password: 'sODHvLXo1UA5',
-    port: 5432,
-    ssl: {
-        rejectUnauthorized: false, // You may need to set this to true in a production environment with a valid certificate
-      },
-  });
-// const db = mysql.createConnection({
-//     host : "localhost",
-//     database : "nodejs_g2",
-//     user : "root",
-//     password : ""
-// })
-db.connect();
+  user: "admin",
+  host: "3.107.72.161",
+  database: "university",
+  password: "ASDasd123!@#",
+  port: 5432,
+  ssl: false,
+});
 
-module.exports = db;
+db.connect((err) => {
+  if (err) {
+    return console.log(err);
+  }
+  return console.log("Database Connected!");
+});
 
+export default db;
